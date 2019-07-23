@@ -4,7 +4,7 @@
   ReadableArray (by React Native), Object[], and JSONArray.
  */
 
-package com.indigoviolet.rnbridgeutils;
+package com.indigoviolet.react;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
@@ -12,6 +12,7 @@ import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableArray;
 
 import java.util.Map;
+import java.lang.reflect.Array;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -115,6 +116,9 @@ public class ArrayUtil {
       if (value instanceof Double) {
         writableArray.pushDouble((Double) value);
       }
+      if (value instanceof Float) {
+        writableArray.pushDouble(((Float) value).doubleValue());
+      }
       if (value instanceof Integer) {
         writableArray.pushInt((Integer) value);
       }
@@ -125,10 +129,22 @@ public class ArrayUtil {
         writableArray.pushMap(MapUtil.toWritableMap((Map<String, Object>) value));
       }
       if (value.getClass().isArray()) {
-        writableArray.pushArray(ArrayUtil.toWritableArray((Object[]) value));
+        writableArray.pushArray(ArrayUtil.toWritableArray(getArray(value)));
       }
     }
 
     return writableArray;
+  }
+
+  // https://stackoverflow.com/a/5608477; handles primitive[] -> Object[]
+  public static Object[] getArray(Object val){
+    if (val instanceof Object[])
+      return (Object[])val;
+    int arrlength = Array.getLength(val);
+    Object[] outputArray = new Object[arrlength];
+    for(int i = 0; i < arrlength; ++i){
+      outputArray[i] = Array.get(val, i);
+    }
+    return outputArray;
   }
 }

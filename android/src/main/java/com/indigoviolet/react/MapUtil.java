@@ -3,7 +3,7 @@
   ReadableMap (by React Native), Map<String, Object>, and JSONObject.
  */
 
-package com.indigoviolet.rnbridgeutils;
+package com.indigoviolet.react;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableMap;
@@ -109,28 +109,29 @@ public class MapUtil {
     return map;
   }
 
-  public static WritableMap toWritableMap(Map<String, Object> map) {
+  public static WritableMap toWritableMap(Map<?, Object> map) {
     WritableMap writableMap = Arguments.createMap();
     Iterator iterator = map.entrySet().iterator();
 
     while (iterator.hasNext()) {
       Map.Entry pair = (Map.Entry)iterator.next();
       Object value = pair.getValue();
+      String stringKey = String.valueOf(pair.getKey());
 
       if (value == null) {
-        writableMap.putNull((String) pair.getKey());
+        writableMap.putNull(stringKey);
       } else if (value instanceof Boolean) {
-        writableMap.putBoolean((String) pair.getKey(), (Boolean) value);
+        writableMap.putBoolean(stringKey, (Boolean) value);
       } else if (value instanceof Double) {
-        writableMap.putDouble((String) pair.getKey(), (Double) value);
+        writableMap.putDouble(stringKey, (Double) value);
       } else if (value instanceof Integer) {
-        writableMap.putInt((String) pair.getKey(), (Integer) value);
+        writableMap.putInt(stringKey, (Integer) value);
       } else if (value instanceof String) {
-        writableMap.putString((String) pair.getKey(), (String) value);
+        writableMap.putString(stringKey, (String) value);
       } else if (value instanceof Map) {
-        writableMap.putMap((String) pair.getKey(), MapUtil.toWritableMap((Map<String, Object>) value));
+        writableMap.putMap(stringKey, MapUtil.toWritableMap((Map<?, Object>) value));
       } else if (value.getClass() != null && value.getClass().isArray()) {
-        writableMap.putArray((String) pair.getKey(), ArrayUtil.toWritableArray((Object[]) value));
+        writableMap.putArray(stringKey, ArrayUtil.toWritableArray(ArrayUtil.getArray(value)));
       }
 
       iterator.remove();
@@ -138,4 +139,36 @@ public class MapUtil {
 
     return writableMap;
   }
+
+
+
+//  public static WritableMap toWritableMap(Map<Integer, Object> map) {
+//    WritableMap writableMap = Arguments.createMap();
+//    Iterator iterator = map.entrySet().iterator();
+//
+//    while (iterator.hasNext()) {
+//      Map.Entry pair = (Map.Entry)iterator.next();
+//      Object value = pair.getValue();
+//
+//      if (value == null) {
+//        writableMap.putNull((String) pair.getKey());
+//      } else if (value instanceof Boolean) {
+//        writableMap.putBoolean((String) pair.getKey(), (Boolean) value);
+//      } else if (value instanceof Double) {
+//        writableMap.putDouble((String) pair.getKey(), (Double) value);
+//      } else if (value instanceof Integer) {
+//        writableMap.putInt((String) pair.getKey(), (Integer) value);
+//      } else if (value instanceof String) {
+//        writableMap.putString((String) pair.getKey(), (String) value);
+//      } else if (value instanceof Map) {
+//        writableMap.putMap((String) pair.getKey(), MapUtil.toWritableMap((Map<>) value));
+//      } else if (value.getClass() != null && value.getClass().isArray()) {
+//        writableMap.putArray((String) pair.getKey(), ArrayUtil.toWritableArray((Object[]) value));
+//      }
+//
+//      iterator.remove();
+//    }
+//
+//    return writableMap;
+//  }
 }
