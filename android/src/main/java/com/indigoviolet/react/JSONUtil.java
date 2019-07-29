@@ -1,3 +1,7 @@
+// Modified from
+// https://gist.github.com/viperwarp/2beb6bbefcc268dee7ad#file-reactnativejson-java
+// https://medium.com/shoutem/ways-to-pass-objects-between-native-and-javascript-in-react-native-c3dcae7bf4f5
+
 package com.indigoviolet.react;
 
 import org.json.JSONArray;

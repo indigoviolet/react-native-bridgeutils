@@ -25,3 +25,5 @@ buck-out/
 *.keystore
 
 .settings
+.project
+.classpath

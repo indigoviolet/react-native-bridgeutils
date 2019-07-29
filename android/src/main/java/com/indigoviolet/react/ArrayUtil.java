@@ -1,7 +1,10 @@
 
 /*
   ArrayUtil exposes a set of helper methods for working with
-  ReadableArray (by React Native), Object[], and JSONArray.
+  ReadableArray (by React Native), Object[]
+
+  Modified from https://gist.github.com/mfmendiola/bb8397162df9f76681325ab9f705748b
+
  */
 
 package com.indigoviolet.react;
@@ -14,62 +17,7 @@ import com.facebook.react.bridge.WritableArray;
 import java.util.Map;
 import java.lang.reflect.Array;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
-
 public class ArrayUtil {
-
-  public static JSONArray toJSONArray(ReadableArray readableArray) throws JSONException {
-    JSONArray jsonArray = new JSONArray();
-
-    for (int i = 0; i < readableArray.size(); i++) {
-      ReadableType type = readableArray.getType(i);
-
-      switch (type) {
-        case Null:
-          jsonArray.put(i, null);
-          break;
-        case Boolean:
-          jsonArray.put(i, readableArray.getBoolean(i));
-          break;
-        case Number:
-          jsonArray.put(i, readableArray.getDouble(i));
-          break;
-        case String:
-          jsonArray.put(i, readableArray.getString(i));
-          break;
-        case Map:
-          jsonArray.put(i, MapUtil.toJSONObject(readableArray.getMap(i)));
-          break;
-        case Array:
-          jsonArray.put(i, ArrayUtil.toJSONArray(readableArray.getArray(i)));
-          break;
-      }
-    }
-
-    return jsonArray;
-  }
-
-  public static Object[] toArray(JSONArray jsonArray) throws JSONException {
-    Object[] array = new Object[jsonArray.length()];
-
-    for (int i = 0; i < jsonArray.length(); i++) {
-      Object value = jsonArray.get(i);
-
-      if (value instanceof JSONObject) {
-        value = MapUtil.toMap((JSONObject) value);
-      }
-      if (value instanceof JSONArray) {
-        value = ArrayUtil.toArray((JSONArray) value);
-      }
-
-      array[i] = value;
-    }
-
-    return array;
-  }
-
   public static Object[] toArray(ReadableArray readableArray) {
     Object[] array = new Object[readableArray.size()];
 
