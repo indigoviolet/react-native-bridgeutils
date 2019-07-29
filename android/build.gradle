@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.facebook.react:react-native:0.60.3'
 }
 
+
 def configureReactNativePom(def pom) {
     def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
 
