@@ -57,26 +57,31 @@ public class ArrayUtil {
 
       if (value == null) {
         writableArray.pushNull();
+      } else if (
+              (value instanceof Double && ((Double) value).isNaN())
+              || (value instanceof Float && ((Float) value).isNaN())
+      ) {
+        writableArray.pushNull();
       }
-      if (value instanceof Boolean) {
+      else if (value instanceof Boolean) {
         writableArray.pushBoolean((Boolean) value);
       }
-      if (value instanceof Double) {
+      else if (value instanceof Double) {
         writableArray.pushDouble((Double) value);
       }
-      if (value instanceof Float) {
+      else if (value instanceof Float) {
         writableArray.pushDouble(((Float) value).doubleValue());
       }
-      if (value instanceof Integer) {
+      else if (value instanceof Integer) {
         writableArray.pushInt((Integer) value);
       }
-      if (value instanceof String) {
+      else if (value instanceof String) {
         writableArray.pushString((String) value);
       }
-      if (value instanceof Map) {
+      else if (value instanceof Map) {
         writableArray.pushMap(MapUtil.toWritableMap((Map<String, Object>) value));
       }
-      if (value.getClass().isArray()) {
+      else if (value.getClass().isArray()) {
         writableArray.pushArray(ArrayUtil.toWritableArray(getArray(value)));
       }
     }
