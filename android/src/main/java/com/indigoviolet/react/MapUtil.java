@@ -68,6 +68,8 @@ public class MapUtil {
         writableMap.putDouble(stringKey, (Double) value);
       } else if (value instanceof Integer) {
         writableMap.putInt(stringKey, (Integer) value);
+      } else if (value instanceof Long) {
+        writableMap.putDouble(stringKey, ((Long) value).doubleValue());
       } else if (value instanceof String) {
         writableMap.putString(stringKey, (String) value);
       } else if (value instanceof Map) {
