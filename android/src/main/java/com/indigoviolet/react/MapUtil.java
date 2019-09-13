@@ -14,6 +14,7 @@ import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableMap;
 
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -66,6 +67,8 @@ public class MapUtil {
         writableMap.putBoolean(stringKey, (Boolean) value);
       } else if (value instanceof Double) {
         writableMap.putDouble(stringKey, (Double) value);
+      } else if (value instanceof Float) {
+        writableMap.putDouble(stringKey, ((Float) value).doubleValue());
       } else if (value instanceof Integer) {
         writableMap.putInt(stringKey, (Integer) value);
       } else if (value instanceof Long) {
@@ -74,6 +77,8 @@ public class MapUtil {
         writableMap.putString(stringKey, (String) value);
       } else if (value instanceof Map) {
         writableMap.putMap(stringKey, MapUtil.toWritableMap((Map<?, Object>) value));
+      } else if (value instanceof List) {
+        writableMap.putArray(stringKey, ArrayUtil.toWritableArray(((List<?>) value).toArray()));
       } else if (value.getClass() != null && value.getClass().isArray()) {
         writableMap.putArray(stringKey, ArrayUtil.toWritableArray(ArrayUtil.getArray(value)));
       }
