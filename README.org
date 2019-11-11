@@ -1,0 +1,8 @@
+#+TITLE:     react-native-bridgeutils
+#+AUTHOR:    Venky Iyer
+
+~react-native-bridgeutils~ contains utilities to serialize complex
+data over the React Native bridge.
+
+It is used by [[https://github.com/indigoviolet/tflite-react-native][tflite-react-native]] and [[https://github.com/indigoviolet/react-native-camera][react-native-camera]] to
+serialize the output of Pose detection back to JS.
